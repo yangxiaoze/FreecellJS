@@ -9,7 +9,7 @@
 	|  Copyright (c) 2015-2016. Brent Ely;
 	|  https://github.com/gitbrent/
 	|
-	|  Licences: MIT
+	|  Licence: MIT
 	|  http://www.opensource.org/licenses/mit-license.php
 	|  ******************************************************************************/
 	-->
@@ -124,7 +124,7 @@
 			gGameSounds.sadTrombone = { buffer:null, url:'sounds/sadTrombone.mp3', src:'freesound.org/people/Benboncan/sounds/73581/' };
 		}
 
-		// ==============================================================================================
+		// =======================================================================================
 
 		function handleFounDrop(event, ui, drop) {
 			// DOCS: "$(this) [drop] represents the droppable the draggable is dropped on. ui.draggable represents the draggable"
@@ -279,19 +279,28 @@
 			// STEP 1: Where are we?
 			switch ( $(card).parent().parent().prop('id') ) {
 				case 'cardCasc':
-					// CHECK 1: Can card go to foundation?
-					// TODO:
-
-					// CHECK 2: Do we have an open slot to send this card to?
 					var event = {};
 					var ui = { draggable:$(card), helper:{ children:function(){ return [$(card)]; } } };
 					var drop = null;
+
+					// CHECK 1: Can card go to foundation?
+					// TODO:
+					if      ( $('#cardFoun1').children().length == 0 ) drop = $('#cardFoun1');
+					else if ( $('#cardFoun2').children().length == 0 ) drop = $('#cardFoun2');
+					else if ( $('#cardFoun3').children().length == 0 ) drop = $('#cardFoun3');
+					else if ( $('#cardFoun4').children().length == 0 ) drop = $('#cardFoun4');
+					if (drop != null) {
+						handleFounDrop(event, ui, drop);
+					}
+
+					// CHECK 2: Do we have an open slot to send this card to?
 					if      ( $('#cardOpen1').children().length == 0 ) drop = $('#cardOpen1');
 					else if ( $('#cardOpen2').children().length == 0 ) drop = $('#cardOpen2');
 					else if ( $('#cardOpen3').children().length == 0 ) drop = $('#cardOpen3');
 					else if ( $('#cardOpen4').children().length == 0 ) drop = $('#cardOpen4');
-					else return false;
-					handleOpenDrop(event, ui, drop);
+					if (drop != null) {
+						handleOpenDrop(event, ui, drop);
+					}
 					break;
 				default:
 					break;
@@ -342,7 +351,7 @@
 			$('#cardCasc div, #cardCasc span').show().css('visibility', 'visible');
 		}
 
-		// ==============================================================================================
+		// =======================================================================================
 
 		function handleStartBtn() {
 			// STEP 1:
@@ -411,7 +420,7 @@
 			(source.start) ? source.start(0) : source.noteOn(0);
 		}
 
-		// ==============================================================================================
+		// =======================================================================================
 
 		function cascHelper() {
 			// A: Build container and fill with cards selected
@@ -657,7 +666,7 @@
 			});
 		}
 
-		// ==============================================================================================
+		// =======================================================================================
 		$(document).ready(function(){ appStart(); })
 	</script>
 </head>
